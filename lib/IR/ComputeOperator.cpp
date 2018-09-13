@@ -65,3 +65,8 @@ void ComputeOperator::replaceOutput(unsigned int pIdx, onnc::Value &pValue)
     fatal(input_out_of_range) << pIdx << name() << (uint32_t)m_Outputs.size();
   m_Outputs[pIdx] = &pValue;
 }
+
+void ComputeOperator::print(json::Value& pJSON) const
+{
+}
+
