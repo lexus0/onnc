@@ -15,6 +15,7 @@ TEST_SOURCES = DigraphTest.cpp \
 	TensorSelTest.cpp \
 	ComputeGraphTest.cpp \
 	MemAllocTest.cpp \
+	ComputeGraphTest.cpp \
 	ONNXReaderTest.cpp
 endif
 
