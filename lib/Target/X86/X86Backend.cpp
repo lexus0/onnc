@@ -152,6 +152,8 @@ void X86Backend::addTensorSel(PassManager& pPM)
   // standard Tensor selection passes.
   addStandardTensorSel(pPM, *this);
 
+  // CreateX86FuseConvReluPass is an example pass.
+  // We don't really want to use it since it doesn't work so far.
   pPM.add(CreateX86FuseConvReluPass());
 }
 
