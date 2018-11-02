@@ -7,7 +7,7 @@
 //===----------------------------------------------------------------------===//
 #include "ONNIApp.h"
 
-#include "CountOperatorsPass.h"
+#include <onnc/Statistics/CountOperatorsPass.h>
 #include "InterpreterPass.h"
 #include "OnnxOptPass.h"
 
