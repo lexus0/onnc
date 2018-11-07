@@ -51,7 +51,10 @@ Pass::ReturnType LinearScanMemAlloc::runOnModule(Module& pModule)
   m_LIPass = getAnalysis<LiveIntervals>();
   m_LiveMatPass = getAnalysis<LiveValueMatrix>();
   m_MemAllocData = getAnalysis<MemAllocData>();
-  m_CountOperatorsPass = getAnalysis<CountOperatorsPass>();
+  m_CountOpPass = getAnalysis<CountOperatorsPass>();
+  outs() << "==== invoking CountOperatorsPass in pass ====\n";
+  m_CountOpPass->print(outs(), &pModule);
+  outs() << "==== end invoking CountOperatorsPass in pass ====\n";
 
   uint64_t right = 0;
 
@@ -78,7 +81,6 @@ Pass::ReturnType LinearScanMemAlloc::runOnModule(Module& pModule)
 
 void LinearScanMemAlloc::getAnalysisUsage(AnalysisUsage& pUsage) const
 {
-  errs() << "there" << std::endl;
   pUsage.addRequiredID(LiveIntervals::ID);
   pUsage.addRequiredID(LiveValueMatrix::ID);
   pUsage.addRequiredID(MemAllocData::ID);

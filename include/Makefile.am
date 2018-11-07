@@ -458,4 +458,6 @@ nobase_nodist_include_HEADERS = \
 	onnc/ADT/EditDistance.h \
 	onnc/ADT/IList.h \
 	onnc/ADT/StringHasher.h \
-	onnc/ADT/IListNode.h
+  onnc/ADT/IListNode.h \
+  onnc/Statistics/Statistics.h \
+  onnc/Statistics/CountOperatorsPass.h 

@@ -9,6 +9,7 @@
 #define ONNC_CODEGEN_LINEAR_SCAN_MEM_ALLOC_H
 #include <onnc/Core/ModulePass.h>
 #include <onnc/CodeGen/MemAllocData.h>
+#include <onnc/Statistics/CountOperatorsPass.h>
 
 namespace onnc {
 
@@ -55,6 +56,7 @@ private:
   LiveIntervals* m_LIPass;
   LiveValueMatrix* m_LiveMatPass;
   TargetMemInfo* m_TMI;
+  CountOperatorsPass* m_CountOpPass;
 };
 
 ModulePass* CreateLinearScanMemAllocPass(TargetBackend* pTB);

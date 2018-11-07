@@ -7,7 +7,6 @@
 //===----------------------------------------------------------------------===//
 #include "ONNIApp.h"
 
-#include <onnc/Statistics/CountOperatorsPass.h>
 #include "InterpreterPass.h"
 #include "OnnxOptPass.h"
 
@@ -23,6 +22,7 @@
 #include <onnc/Core/PassManager.h>
 #include <onnc/ADT/Color.h>
 #include <onnc/Support/IOStream.h>
+#include <onnc/Statistics/CountOperatorsPass.h>
 
 #include <cstdlib>
 #include <fstream>
@@ -73,11 +73,11 @@ int ONNIApp::run()
 
   TargetBackend* backend = target->createBackend(options().target());
   backend->addTensorSel(pm);
-  backend->addTensorSched(pm);
-  backend->addMemAlloc(pm);
   if (options().verbose() >= 3) {
     pm.add(CreateCountOperatorsPass("[v3] "));
   }
+  backend->addTensorSched(pm);
+  backend->addMemAlloc(pm);
 
   // FIXME: Use onnc-runtime to handle input
   char *input_mem = NULL;
