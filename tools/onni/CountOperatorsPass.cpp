@@ -28,7 +28,11 @@ Pass::ReturnType CountOperatorsPass::runOnModule(Module &pModule)
 {
   std::unordered_map<std::string, int> count;
   size_t op_len = 8;
-
+  std::string str2("{\"Skymizer\":\"ONNC\"}");
+  global::stat()->clear();
+  global::stat()->read(str2);
+  global::Scalar myScalar = global::Scalar("hello");
+  /*
   for (ComputeOperator &cm : *pModule.getRootComputeGraph()) {
     if (dyn_cast<InputOperator>(&cm)) continue;
     if (dyn_cast<Initializer>(&cm)) continue;
@@ -38,16 +42,27 @@ Pass::ReturnType CountOperatorsPass::runOnModule(Module &pModule)
     op_len = std::max(op_len, name.size());
     ++m_Total;
   }
-
-  std::string str2("{\"Skymizer\":\"ONNC\"}");
-  global::stat()->clear();
-  global::stat()->read(str2);
+  */
+  
+  for (ComputeOperator &cm : *pModule.getRootComputeGraph()) {
+    if (dyn_cast<InputOperator>(&cm)) continue;
+    if (dyn_cast<Initializer>(&cm)) continue;
+    if (dyn_cast<OutputOperator>(&cm)) continue;
+    onnc::StringRef name = cm.name(); 
+    op_len = std::max(op_len, name.size());
+    global::Scalar tmpScalar = global::Scalar(name);
+    ++tmpScalar;
+    ++m_Total;
+  }
+  myScalar = m_Total;
+  /*
   global::stat()->addGroup("CountOperatorsPass");
 
   for(auto mapIter = count.begin(); mapIter != count.end(); ++mapIter){
     global::stat()->group("CountOperatorsPass").\
     writeEntry(mapIter->first, mapIter->second);
   }
+  */
 
   // Counting Width for alignment
   m_Width.first = op_len;
@@ -73,7 +88,7 @@ void CountOperatorsPass::printFooter(OStream &pOS) const {
 
 void CountOperatorsPass::print(OStream& pOS, const Module* pModule) const {
   printHeader(pOS);
-  StatisticsGroup group = global::stat()->group("CountOperatorsPass");
+  StatisticsGroup group = global::stat()->group("global_scalar");
   StringList opList = group.entryList();
   for(auto listItr = opList.begin(); listItr != opList.end(); ++listItr){
     pOS << m_Prefix << std::setw(m_Width.first) << *listItr << SEP

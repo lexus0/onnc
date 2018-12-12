@@ -110,11 +110,13 @@ int ONNIApp::run()
 
   if (options().verbose() >= 3) {
     errs() << "==== print CountOperatorsPass result again ====\n";
-    StatisticsGroup group = global::stat()->group("CountOperatorsPass");
+    StatisticsGroup group = global::stat()->group("global_scalar");
     StringList opList = group.entryList();
     for(auto listItr=opList.begin(); listItr != opList.end(); ++listItr){
       errs() << *listItr << ": " << group.readEntry(*listItr, 0) << std::endl;
     }
+    errs() << "test counter 'hello': " << global::stat()->group("global_scalar")\
+      .readEntry("hello", 0) << std::endl;
     errs() << "==== end again of printing CountOperatorsPass ====\n";
   }
   delete input_mem;

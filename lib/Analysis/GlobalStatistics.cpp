@@ -78,7 +78,14 @@ Statistics* global::stat()
 {
   return g_Stat->statistics();
 }
-
+global::Scalar::Scalar(const std::string& pScalarName)
+  : m_ScalarName(pScalarName){
+  Statistics* gStat = global::stat();
+  gStat->addGroup("global_scalar");
+  if (gStat->group("global_scalar").hasEntry(m_ScalarName))
+    return;
+  global:stat()->group("global_scalar").writeEntry(m_ScalarName, 0);
+}
 
 //===----------------------------------------------------------------------===//
 // SkyGlobalPrivate member functions
